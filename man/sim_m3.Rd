@@ -5,7 +5,7 @@
 \title{sim_m3}
 \usage{
 sim_m3(
-  pars = list(I = 2, J = 3, K = 5, w_a = w_a, sigma_ag = 1, u_mean = 0, sigma_mean = 1,
+  pars = list(I = 2, J = 3, K = 10, w_a = w_a, sigma_a = 1, u_mean = 0, sigma_mean = 1,
     u_env = 0, sigma_env = 1, u_gen = 0, sigma_env = 1, u_epsilon = 0, sigma_epsilon = 1,
     x_env = x_env, sigma_w = 1, u_w = 0)
 )

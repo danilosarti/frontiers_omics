@@ -11,7 +11,7 @@
 
 #'
 #' @examples
-sim_m3=function(pars=list(I=2,J=3,K=5,w_a=w_a,sigma_ag=1,u_mean=0,sigma_mean=1,u_env=0,sigma_env=1, u_gen=0,sigma_env=1,u_epsilon=0,sigma_epsilon=1, x_env=x_env,sigma_w=1,u_w=0)){
+sim_m3=function(pars=list(I=2,J=3,K=10,w_a=w_a,sigma_a=1,u_mean=0,sigma_mean=1,u_env=0,sigma_env=1, u_gen=0,sigma_env=1,u_epsilon=0,sigma_epsilon=1, x_env=x_env,sigma_w=1,u_w=0)){
   # setting the dimensions
   I=pars$I
   J=pars$J
@@ -32,7 +32,7 @@ sim_m3=function(pars=list(I=2,J=3,K=5,w_a=w_a,sigma_ag=1,u_mean=0,sigma_mean=1,u
   ##
   #generate matrix Ga which will be used to generate the genomic effects and interactions effects to
   G_a=tcrossprod(pars$w_a/ncol(pars$w_a))
-  sigma_ag=pars$sigma_ag
+  sigma_a=pars$sigma_a
   ## obtaining the interactions
   # we start by obtaining the varcovarstructure
   #g_a_part=as.matrix(z_a)%*%G_a%*%t(as.matrix(z_a))
@@ -56,7 +56,7 @@ sim_m3=function(pars=list(I=2,J=3,K=5,w_a=w_a,sigma_ag=1,u_mean=0,sigma_mean=1,u
     #generate the genetic effets
     g_i <- mvrnorm(n = 1,
                    mu = rep(pars$u_gen,I),
-                   Sigma = G_a*sigma_ag)
+                   Sigma = G_a*sigma_a)
     #### now we simulate the environmental effect
     e_j=rnorm(J,mean=pars$u_env,sd=pars$sigma_env)
     ### now we simulate the errors

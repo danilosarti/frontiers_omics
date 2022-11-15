@@ -8,7 +8,7 @@
 #' @import  MASS
 #' @import tidyverse
 #' @examples
-sim_m2=function(pars=list(I=2,J=3,w_a=w_a,sigma_ag=1,u_mean=0,sigma_mean=1,u_env=0,sigma_env=1, u_gen=0,sigma_env=1,sigma_ge=2,u_ge=0,sigma_ge=1,u_epsilon=0,sigma_epsilon=1)){
+sim_m2=function(pars=list(I=2,J=3,w_a=w_a,sigma_a=1,u_mean=0,sigma_mean=1,u_env=0,sigma_env=1, u_gen=0,sigma_env=1,sigma_ge=2,u_ge=0,sigma_ge=1,u_epsilon=0,sigma_epsilon=1)){
   # setting the dimensions
   I=pars$I
   J=pars$J
@@ -29,7 +29,7 @@ sim_m2=function(pars=list(I=2,J=3,w_a=w_a,sigma_ag=1,u_mean=0,sigma_mean=1,u_env
   ##
   #generate matrix Ga which will be used to generate the genomic effects and interactions effects to
   G_a=tcrossprod(pars$w_a/ncol(pars$w_a))
-  sigma_ag=pars$sigma_ag
+  sigma_a=pars$sigma_a
   rownames(G_a)=sprintf("genotype_%s",seq(1:I))
   colnames(G_a)=sprintf("genotype_%s",seq(1:I))
   ## obtaining the interactions
@@ -54,7 +54,7 @@ sim_m2=function(pars=list(I=2,J=3,w_a=w_a,sigma_ag=1,u_mean=0,sigma_mean=1,u_env
     #generate the genetic effets
     g_i <- mvrnorm(n = 1,
                    mu = rep(pars$u_gen,I),
-                   Sigma = G_a*sigma_ag)
+                   Sigma = G_a*sigma_a)
     #### now we simulate the environmental effect
     e_j=rnorm(J,mean=pars$u_env,sd=pars$sigma_env)
     ### now we simulate the errors

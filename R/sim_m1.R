@@ -9,7 +9,7 @@
 #'
 #' @examples
 
-sim_m1<-function(pars=list(w_a=w_a,u_mean=0,sigma_mean=1, sigma_ag=1,u_env=0,sigma_env=1, u_epsilon=0, sigma_epsilon=1,J=3,I=2,u_gen=1)){
+sim_m1<-function(pars=list(w_a=w_a,u_mean=0,sigma_mean=1, sigma_a=1,u_env=0,sigma_env=1, u_epsilon=0, sigma_epsilon=1,J=3,I=2,u_gen=1)){
   #declaring the dimensions
   I=pars$I
   J=pars$J
@@ -18,7 +18,7 @@ sim_m1<-function(pars=list(w_a=w_a,u_mean=0,sigma_mean=1, sigma_ag=1,u_env=0,sig
   dim(G_a)
   rownames(G_a)=sprintf("genotype_%s",seq(1:I))
   colnames(G_a)=sprintf("genotype_%s",seq(1:I))
-  sigma_ag=pars$sigma_ag
+  sigma_a=pars$sigma_a
   library(MASS)
   train_test=c("train","test")
   # we need to produce a training and a test dataset.
@@ -30,7 +30,7 @@ sim_m1<-function(pars=list(w_a=w_a,u_mean=0,sigma_mean=1, sigma_ag=1,u_env=0,sig
     #generate the genetic effets
     g_i <- mvrnorm(n = 1,
                    mu = rep(pars$u_gen,I),
-                   Sigma = G_a*sigma_ag)
+                   Sigma = G_a*sigma_a)
     #### now we simulate the environmental effect
     e_j=rnorm(J,mean=pars$u_env,sd=pars$sigma_env)
     ### now we simulate the errors
