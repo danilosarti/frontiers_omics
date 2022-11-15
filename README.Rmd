@@ -19,6 +19,8 @@ knitr::opts_chunk$set(
 
 Here we will present a brief overview of the article ... functions and simulated data. 
 
+The simulated data used in the paper is contained in the folder data of the package. 
+
 
 
 
