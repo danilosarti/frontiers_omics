@@ -115,5 +115,114 @@ head(m_5$test_df)
 
 # To build large simulations 
 
+## create a dataframe containing information about the scenarios 
 
+This procedure can take long to be made. Consider using the data sets contained in the data folder. 
+
+```{r}
+n_genotypes=c(200,500)
+n_env<-c(10,20)
+k_envs=c(100)
+n_markers=c(1500,5000)
+u_mean=c(5,10)
+sigma_mean=c(1.5,3)
+#used for estimating g_i multiplied by G_a matrix
+sigma_a=c(2,5)
+u_env=c(2,3)
+sigma_env=1.5 
+u_epsilon=0 
+sigma_epsilon=1
+u_gen=3
+sigma_ge=c(1,2)
+u_ge=c(1,2)
+sigma_w=c(0.5,0.9)
+u_w=c(2,5)
+sigma_aw=1
+
+df_scenarios=expand.grid(n_genotypes=n_genotypes,
+                         n_env=n_env,
+                         k_envs=k_envs,
+                         u_mean=u_mean,
+                         sigma_mean=sigma_mean,
+                         #used for estimating g_i multiplied by G_a matrix
+                         sigma_a=sigma_a,
+                         u_env=u_env,
+                         sigma_env=sigma_env, 
+                         u_epsilon=u_epsilon,
+                         sigma_epsilon= sigma_epsilon,
+                         u_gen=u_gen,
+                        
+                         sigma_ge=sigma_ge,
+                         u_ge= u_ge,
+                         sigma_w=sigma_w,
+                         u_w=u_w,
+                         sigma_aw=sigma_aw,
+                         n_markers=n_markers
+)
+dim(df_scenarios)
+
+
+
+```
+
+
+```{r}
+# for ( i in 1:nrow(df_scenarios)){
+#   i=1
+#   n_genotypes=df_scenarios[i,1]
+#   n_env<-df_scenarios[i,2]
+#   k_envs=df_scenarios[i,3]
+#   I=n_genotypes
+#   J=n_env
+#   K=k_envs
+#   u_mean=df_scenarios[i,4]
+#   sigma_mean=df_scenarios[i,5]
+# 
+#   sigma_a=df_scenarios[i,6]
+#   u_env=df_scenarios[i,7]
+#   sigma_env=df_scenarios[i,8]
+#   u_epsilon=df_scenarios[i,9] 
+#   sigma_epsilon=df_scenarios[i,10]
+#   u_gen=df_scenarios[i,11]
+#   
+#   sigma_ge=df_scenarios[i,12]
+#   u_ge=df_scenarios[i,13]
+#   sigma_w=df_scenarios[i,14]
+#   u_w=df_scenarios[i,15]
+#   sigma_aw=df_scenarios[i,16]
+#   n_markers=df_scenarios[i,17]
+#   
+# # generate matrix w_a
+#   marker_label=sprintf("marker_%s",seq(1:n_markers))
+#   markers_expression=c(0,1,2)
+#   data_expression=sample(markers_expression,n_markers*n_genotypes,replace = TRUE)
+#   w_a=matrix(data_expression,nrow=n_genotypes,ncol = n_markers)
+#   colnames(w_a)=marker_label
+#   rownames(w_a)=gen_label=sprintf("genotype_%s",seq(1:n_genotypes))
+# 
+# #generate environment kernels 
+#   env_cov_label=sprintf("env_cov_%s",seq(1:k_envs))
+#   env_lab=sprintf("environment_%s",seq(1:J))
+#   envs_expression=rnorm(100)
+#   data_env=sample(envs_expression,k_envs*J,replace = TRUE)
+#   x_env=matrix(data_env,nrow=J,ncol = k_envs)
+#   colnames(x_env)=env_cov_label
+#   rownames(x_env)=env_lab
+# 
+# # generating data 
+#   #################################################
+#   m_1=sim_m1(pars=list(w_a=w_a,u_mean=u_mean,sigma_mean=sigma_mean, sigma_a=sigma_a,u_env=u_env,sigma_env=sigma_env, u_epsilon=u_epsilon, sigma_epsilon=sigma_epsilon,J=J,I=I,u_gen=u_gen))
+#   ##################################################
+#   m_2=sim_m2(pars=list(I=I,J=J,w_a=w_a,sigma_a=sigma_a,u_mean=u_mean,sigma_mean=sigma_mean,u_env=u_env,sigma_env=sigma_env, u_gen=u_gen,sigma_env=sigma_env,sigma_ge=sigma_ge,u_ge=u_ge,sigma_ge=sigma_ge,u_epsilon=u_epsilon,sigma_epsilon=sigma_epsilon))
+#   
+#   ##################################################
+#   m_3=sim_m3(pars=list(I=I,J=J,K=K,w_a=w_a,sigma_a=sigma_a,u_mean=u_mean,sigma_mean=sigma_mean,u_env=u_env,sigma_env=sigma_env, u_gen=u_gen,sigma_env=sigma_env,u_epsilon=u_epsilon,sigma_epsilon=sigma_epsilon, x_env=x_env,sigma_w=sigma_w,u_w=u_w))
+#   
+#   #####################################
+#   m_4=sim_m4(pars=list(I=I,J=J,K=K,w_a=w_a,sigma_a=sigma_a,u_mean=u_mean,sigma_mean=sigma_mean,u_env=u_env,sigma_env=sigma_env, u_gen=u_gen,sigma_env=sigma_env,u_epsilon=u_epsilon,sigma_epsilon=sigma_epsilon, x_env=x_env,sigma_w=sigma_w,u_w=u_w,sigma_ge=sigma_ge,u_ge=u_ge))
+#   ####################################
+#   m_5=sim_m5(pars=list(I=I,J=K,K=K,w_a=w_a,sigma_a=sigma_a,u_mean=u_mean,sigma_mean=sigma_mean,u_env=u_env,sigma_env=sigma_env, u_gen=u_gen,sigma_env=sigma_env,u_epsilon=u_epsilon,sigma_epsilon=sigma_epsilon, x_env=x_env,sigma_w=sigma_w,u_w=u_w,sigma_ge=sigma_ge,u_ge=u_ge,sigma_aw=sigma_aw))
+#   ## Insert here how to save the files generated. 
+# }
+```
 
