@@ -1,0 +1,13 @@
+Package: frons
+Title: Frontiers paper
+Version: 0.0.0.9000
+Authors@R: 
+    person("Danilo", "Sarti", , "danilo.sarti@mu.ie", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Implements the flow proposed in .
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+Imports: stats, matrixcalc, tidyverse, MASS, modelr
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1

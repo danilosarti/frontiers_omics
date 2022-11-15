@@ -1,0 +1,114 @@
+---
+title: "Paper Flow"
+author: "Danilo Sarti"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Paper Flow}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(frons)
+```
+
+# Simulating BLUEs
+
+```{r}
+sim_blues=sim_blue_model(pars = list(I = 4,J=3,Z=3,R=2,u_treat=0,sigma_treat=1,u_gen=0,
+                                    sigma_gen=1,u_block=0,sigma_block=1,u_pb=0,sigma_pb=1, u_gp=0, sigma_gp=1,u_mean=0,sigma_mean=1,u_epsilon=0, sigma_epsilon=1
+))
+head(sim_blues$test_df)[1:3,1:4]
+```
+
+
+# Simulating from Model 1 
+
+
+## setting global parameters required by the model 
+
+```{r}
+# setting global parameters
+I=2#number of genotypes
+J=3 #number of environments 
+K=10 # envirnmental covariates
+# simulating a matrix of markers w_a
+#WA= markes columns individual rows 0,1,2
+#0- AA, 1-Aa, 2aa.
+n_markers=600
+marker_label=sprintf("marker_%s",seq(1:n_markers))
+markers_expression=c(0,1,2)
+data_expression=sample(markers_expression,n_markers*I,replace = TRUE)
+w_a=matrix(data_expression,nrow=I,ncol = n_markers)
+colnames(w_a)=marker_label
+rownames(w_a)=gen_label=sprintf("genotype_%s",seq(1:I))
+# we must calculate now the $2 \sum_{l}^{n} p_{l}\left(1-p_{l}\right)$
+
+
+## generate a matrix of environmental relationship
+n_env_cov=3
+env_cov_label=sprintf("env_cov_%s",seq(1:n_env_cov))
+env_lab=sprintf("environment_%s",seq(1:J))
+envs_expression=rnorm(100)
+data_env=sample(envs_expression,n_env_cov*J,replace = TRUE)
+x_env=matrix(data_env,nrow=J,ncol = n_env_cov)
+colnames(x_env)=env_cov_label
+rownames(x_env)=env_lab
+
+u_mean=100
+sigma_mean=20
+sigma_ag=1
+u_env=0
+sigma_env=1 
+u_epsilon=0 
+sigma_epsilon=1
+u_gen=0
+u_mean=0
+sigma_ge=1
+u_ge=0
+sigma_w=1
+u_w=0
+sigma_aw=1
+```
+
+
+
+```{r}
+sim_m1=sim_m1(pars=list(w_a=w_a,u_mean=0,sigma_mean=1, sigma_ag=1,u_env=0,sigma_env=1, u_epsilon=0, sigma_epsilon=1,J=3,I=2,u_gen=1))
+
+head(sim_m1$test_df)
+```
+
+# Simulating from model 2
+
+```{r}
+m_2=sim_m2(pars=list(I=I,J=J,w_a=w_a,sigma_ag=sigma_ag,u_mean=u_mean,sigma_mean=sigma_mean,u_env=u_env,sigma_env=sigma_env, u_gen=u_gen,sigma_env=sigma_env,sigma_ge=sigma_ge,u_ge=u_ge,sigma_ge=sigma_ge,u_epsilon=u_epsilon,sigma_epsilon=sigma_epsilon))
+head(m_2$test_df)
+```
+
+# Simulating from Model 3:
+
+```{r}
+m_3=sim_m3(pars=list(I=I,J=J,K=K,w_a=w_a,sigma_ag=sigma_ag,u_mean=u_mean,sigma_mean=sigma_mean,u_env=u_env,sigma_env=sigma_env, u_gen=u_gen,sigma_env=sigma_env,u_epsilon=u_epsilon,sigma_epsilon=sigma_epsilon, x_env=x_env,sigma_w=sigma_w,u_w=u_w))
+head(m_3$test_df)
+```
+
+# Simulating from Model 4:
+
+
+```{r}
+m_4=sim_m4(pars=list(I=I,J=J,K=K,w_a=w_a,sigma_ag=sigma_ag,u_mean=u_mean,sigma_mean=sigma_mean,u_env=u_env,sigma_env=sigma_env, u_gen=u_gen,sigma_env=sigma_env,u_epsilon=u_epsilon,sigma_epsilon=sigma_epsilon, x_env=x_env,sigma_w=sigma_w,u_w=u_w,sigma_ge=sigma_ge,u_ge=u_ge))
+head(m_4$test_df)
+```
+
+# Simulating from Model 5:
+
+```{r}
+m_5=sim_m5(pars=list(I=I,J=J,K=K,w_a=w_a,sigma_ag=sigma_ag,u_mean=u_mean,sigma_mean=sigma_mean,u_env=u_env,sigma_env=sigma_env, u_gen=u_gen,sigma_env=sigma_env,u_epsilon=u_epsilon,sigma_epsilon=sigma_epsilon, x_env=x_env,sigma_w=sigma_w,u_w=u_w,sigma_ge=sigma_ge,u_ge=u_ge,sigma_aw=sigma_aw))
+
+head(m_5$test_df)
+```
+
